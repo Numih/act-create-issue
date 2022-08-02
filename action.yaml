@@ -11,7 +11,7 @@ inputs:
     description: 'Repository to create the issue on'
     required: true
   labels:
-    description: 'Repository to create the issue on'
+    description: 'Issue labels'
     required: false
     
 runs:
@@ -24,11 +24,10 @@ runs:
         with:    
           result-encoding: string
           script: |
-            const issue = await github.request('POST /repos/{owner}/{repo}/issues', {
+            await github.request('POST /repos/{owner}/{repo}/issues', {
               owner: context.repo.owner,
-              repo: '${{ inputs.repo }}',
-              title: '${{ inputs.title }}',
-              body: '${{ inputs.body }}',
-              labels: [${{ inputs.labels }}]
+              repo: 'roadmap',
+              title: 'testte',
+              body: 'testes',
+              labels: ['bug']
             })
-            return issue
