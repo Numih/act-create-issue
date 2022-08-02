@@ -1,5 +1,5 @@
-name: 'Docker build and deploy image'
-description: 'Builds and publishes a docker image'
+name: 'Create github issue'
+description: 'Creates a github issue'
 inputs:
   title:
     description: 'Issue title'
