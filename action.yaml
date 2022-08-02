@@ -1,0 +1,34 @@
+name: 'Docker build and deploy image'
+description: 'Builds and publishes a docker image'
+inputs:
+  title:
+    description: 'Issue title'
+    required: true
+  body:
+    description: 'Issue body'
+    required: true
+  repo:
+    description: 'Repository to create the issue on'
+    required: true
+  labels:
+    description: 'Repository to create the issue on'
+    required: false
+    
+runs:
+  using: "composite"
+  steps:
+  
+      - id: create-issue
+        name: Create issue
+        uses: Numih/act-github-script@v6
+        with:    
+          result-encoding: string
+          script: |
+            const issue = await github.request('POST /repos/{owner}/{repo}/issues', {
+              owner: context.repo.owner,
+              repo: '${{ inputs.repo }}',
+              title: '${{ inputs.title }}',
+              body: '${{ inputs.body }}',
+              labels: [${{ inputs.labels }}]
+            })
+            return issue
