@@ -13,6 +13,9 @@ inputs:
   labels:
     description: 'Issue labels'
     required: false
+  token:
+    description: 'Github Token'
+    required: true
     
 runs:
   using: "composite"
@@ -23,11 +26,12 @@ runs:
         uses: Numih/act-github-script@v6
         with:    
           result-encoding: string
+          github-token: ${{ inputs.token }}
           script: |
             await github.request('POST /repos/{owner}/{repo}/issues', {
               owner: context.repo.owner,
-              repo: 'roadmap',
-              title: 'testte',
-              body: 'testes',
-              labels: ['bug']
+              repo: core.getInput('repo', { required: true }),
+              title: core.getInput('title', { required: true }),
+              body: core.getInput('body', { required: true }),
+              labels: core.getInput('labels', { required: true }).split(',')
             })
