@@ -35,6 +35,7 @@ async function run(){
     } catch(e) {
         console.log(e);
         core.error(e);
+        throw e;
     }
 }
 
