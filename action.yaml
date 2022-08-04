@@ -11,28 +11,14 @@ inputs:
     description: 'Repository to create the issue on'
     required: true
   labels:
-    description: 'Issue labels'
+    description: 'Issue labels separated by comma'
     required: false
     default: ''
   token:
     description: 'Github Token'
-    required: true
+    required: false
+    default: ${{ github.token }}
     
 runs:
-  using: "composite"
-  steps:
-  
-      - id: create-issue
-        name: Create issue
-        uses: Numih/act-github-script@v6
-        with:    
-          result-encoding: string
-          github-token: ${{ inputs.token }}
-          script: |
-            await github.request('POST /repos/{owner}/{repo}/issues', {
-              owner: context.repo.owner,
-              repo: core.getInput('repo', { required: true }),
-              title: core.getInput('title', { required: true }),
-              body: core.getInput('body', { required: true }),
-              labels: core.getInput('labels').split(',')
-            })
+  using: node16
+  main: dist/index.js
