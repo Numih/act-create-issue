@@ -9010,7 +9010,7 @@ async function run(){
     const token = core.getInput('token');
     core.info('token: ' + token);
 
-    const octokit = github.getOctokit(token);
+    const octokit = github.getOctokit(token, { userAgent: 'act-create-issue' });
     const context = github.context;
 
     const owner = context.repo.owner.trim();
