@@ -5,7 +5,7 @@ async function run(){
 
     const octokit = github.getOctokit(core.getInput('token'));
     const context = github.context;
-    core.info(context)
+    core.info(context.repo.owner)
 
     await octokit.request('POST /repos/{owner}/{repo}/issues', {
         owner: context.repo.owner,
