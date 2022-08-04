@@ -18,7 +18,7 @@ async function run(){
     core.info('body: ' + body);
     core.info('labels: ' + labels);
 
-    await octokit.request('POST /repos/{owner}/{repo}/issues', {
+    await octokit.rest.issues.create({
         owner: owner,
         repo: repo,
         title: title,
