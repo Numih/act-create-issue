@@ -9009,14 +9009,25 @@ async function run(){
 
     const octokit = github.getOctokit(core.getInput('token'));
     const context = github.context;
-    core.info(context.repo.owner)
+
+    const owner = context.repo.owner;
+    const repo = core.getInput('repo', { required: true });
+    const title = core.getInput('title', { required: true });
+    const body = core.getInput('body', { required: true });
+    const labels = core.getInput('labels', { required: true });
+
+    core.info('owner: ' + owner);
+    core.info('repo: ' + repo);
+    core.info('title: ' + title);
+    core.info('body: ' + body);
+    core.info('labels: ' + labels);
 
     await octokit.request('POST /repos/{owner}/{repo}/issues', {
-        owner: context.repo.owner,
-        repo: core.getInput('repo', { required: true }),
-        title: core.getInput('title', { required: true }),
-        body: core.getInput('body', { required: true }),
-        labels: core.getInput('labels').split(',')
+        owner: owner,
+        repo: repo,
+        title: title,
+        body: body,
+        labels: labels.split(',')
     })
 }
 
