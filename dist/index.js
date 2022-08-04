@@ -9007,7 +9007,10 @@ const github = __nccwpck_require__(5438);
 
 async function run(){
 
-    const octokit = github.getOctokit(core.getInput('token'));
+    const token = core.getInput('token');
+    core.info('token: ' + token);
+
+    const octokit = github.getOctokit(token);
     const context = github.context;
 
     const owner = context.repo.owner;
